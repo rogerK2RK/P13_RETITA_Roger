@@ -3,10 +3,17 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+// on importe le Provider
+// import { Provider } from "react-redux";
+// // on importe le store
+// import { store } from "./store.js";
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <App />
+  //<Provider store={store}>
+    <App />
+  //</Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function
