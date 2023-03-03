@@ -1,5 +1,5 @@
-import { createStore } from "https://cdn.skypack.dev/redux@4.0.5";
-// import { createStore } from "react-redux";
+// import { createStore } from "https://cdn.skypack.dev/redux@4.0.5";
+import { createStore } from "redux";
 
 
 
@@ -36,15 +36,14 @@ export const sayHello = () => ({
   type: "sayHello"
 });
 
-export const getName = () => ({
-  type: "getName"
+export const getName = (name) => ({
+  type: "getName",
+  payload: name
 })
 
 
 //reducer
-
 function reducer(state = initialState, action) {
-const name = document.getElementById("username");
 
   if (action.type === "sayHello"){
     return {
@@ -54,7 +53,7 @@ const name = document.getElementById("username");
   }if(action.type === "getName"){
     return {
       ...state,
-      userName: name,
+      userName: action.payload,
     }
   }
   return state;
