@@ -40,11 +40,12 @@ export const getName = () => ({
   type: "getName"
 })
 
-const name = document.getElementById("username");
 
 //reducer
 
 function reducer(state = initialState, action) {
+const name = document.getElementById("username");
+
   if (action.type === "sayHello"){
     return {
       ...state,
@@ -56,7 +57,6 @@ function reducer(state = initialState, action) {
       userName: name,
     }
   }
-
   return state;
 }
 
