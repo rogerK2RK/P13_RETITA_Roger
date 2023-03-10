@@ -36,9 +36,13 @@ export const sayHello = () => ({
   type: "sayHello"
 });
 
-export const getName = (name) => ({
-  type: "getName",
-  payload: name
+export const getEmail = (email) => ({
+  type: "getEmail",
+  payload: email
+})
+export const getPassword = (password) => ({
+  type: "getPassword",
+  payload: password
 })
 
 
@@ -50,12 +54,18 @@ function reducer(state = initialState, action) {
       ...state,
       isLogged: !state.isLogged,
     }
-  }if(action.type === "getName"){
+  }if(action.type === "getEmail"){
     return {
       ...state,
-      userName: action.payload,
+      email: action.payload,
+    }
+  }if(action.type === "getPassword"){
+    return {
+      ...state,
+      password: action.payload,
     }
   }
+
   return state;
 }
 
