@@ -18,7 +18,7 @@ function SignIn() {
     dispatch(sayHello());
     dispatch(getEmail(userEmailInputVal));
 
-    // console.log(userEmail);
+    // console.log(userEmailInputVal);
     // console.log(password);
     const token = await main(userEmailInputVal, password);
     console.log(token);
