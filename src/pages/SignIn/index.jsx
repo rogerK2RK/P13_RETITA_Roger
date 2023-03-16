@@ -2,8 +2,7 @@ import React, {useRef,useState} from 'react';
 import styles from "./styles.module.css"
 import { useDispatch, useSelector } from 'react-redux';
 import { sayHello, getEmail } from '../../store.js'
-import getToken from '../../components/Token';
-import getProfileData from '../../components/Token';
+import {getToken, getProfileData}  from '../../components/Token';
 
 function SignIn() {
   const dispatch = useDispatch();
