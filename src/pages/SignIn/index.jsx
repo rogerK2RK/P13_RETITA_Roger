@@ -2,7 +2,8 @@ import React, {useRef,useState} from 'react';
 import styles from "./styles.module.css"
 import { useDispatch, useSelector } from 'react-redux';
 import { sayHello, getEmail } from '../../store.js'
-import main from '../../components/Token';
+import getToken from '../../components/Token';
+import getProfileData from '../../components/Token';
 
 function SignIn() {
   const dispatch = useDispatch();
@@ -20,8 +21,11 @@ function SignIn() {
 
     // console.log(userEmailInputVal);
     // console.log(password);
-    const token = await main(userEmailInputVal, password);
+    const token = await getToken(userEmailInputVal, password);
+    const doner = getProfileData();
+    // localStorage.setItem('token', JSON.stringify(token));
     console.log(token);
+    console.log(doner);
     
   };
   

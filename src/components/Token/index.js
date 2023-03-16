@@ -1,44 +1,37 @@
 import axios from "axios";
 const loginUrl  = 'http://localhost:3001/api/v1/user/login'
-// const profileUrl = 'http://localhost:3001/api/v1/user/profile';
+const profileUrl = 'http://localhost:3001/api/v1/user/profile';
 // const url = 'http://localhost:3001/api/v1'
 
+// Get the token and stok in localStorage
 async function getToken(email, password) {
     try{
         const response = await axios.post(loginUrl , {email, password,});
-        return response.data.token;
+        const token = response.data.token;
+        localStorage.setItem('token', token);
+        return token;
     } catch (error) {
         console.error(error);
     }
 };
 
-// export default getToken
+//get the token from the localStorage and add in the header 
+async function getProfileData() {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get(profileUrl, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        const profileData = response.data;
+        // 3. Stocker les données dans Redux
+        return profileData.body;
+    } catch (error) {
+        console.error(error);
+    }
+};
+export { getToken, getProfileData };
 
 
-// async function getUserProfile(token) {
-//     try {
-//         const response = await axios.post(profileUrl, {
-//             headers: { Authorization: `Bearer ${token}` },
-//         });
-//         return response.data;
-//     } catch (error) {
-//         console.error(error);
-//         // if (error.response && error.response.status === 401) {
-//         //     console.log('Token expired or invalid, refreshing token...');
-//         //     const newToken = await getToken(email, password);
-//         //     return getUserProfile(newToken, email, password);
-//         // } else {
-//         // console.log('Unknown error:', error);
-//         // }
-//     }
-// }
-
-async function main(email, password) {
-//     const email = 'steve@rogers.com';
-//   const password = 'password456';
-    const token = await getToken(email, password);
-    // const userProfile = await getUserProfile(token);
-    console.log(token);
-}
-  
-export default main
+export default getToken
