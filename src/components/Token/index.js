@@ -7,7 +7,7 @@ const profileUrl = 'http://localhost:3001/api/v1/user/profile';
 async function getToken(email, password) {
     try{
         const response = await axios.post(loginUrl , {email, password,});
-        const token = response.data.token;
+        const token = response.data.body.token;
         localStorage.setItem('token', token);
         return token;
     } catch (error) {
@@ -19,7 +19,7 @@ async function getToken(email, password) {
 async function getProfileData() {
     try {
         const token = localStorage.getItem('token');
-        const response = await axios.get(profileUrl, {
+        const response = await axios.post(profileUrl,{}, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -34,4 +34,4 @@ async function getProfileData() {
 export { getToken, getProfileData };
 
 
-export default getToken
+// export default getToken

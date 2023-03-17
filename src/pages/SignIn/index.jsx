@@ -1,4 +1,4 @@
-import React, {useRef,useState} from 'react';
+import React, {useRef} from 'react';
 import styles from "./styles.module.css"
 import { useDispatch, useSelector } from 'react-redux';
 import { sayHello, getEmail } from '../../store.js'
@@ -8,20 +8,23 @@ function SignIn() {
   const dispatch = useDispatch();
   const isConnected = useSelector(state => state.isLogged);
   // const userEmail = useSelector(state => state.userEmail);
-  const [password, setPassword] = useState("");
+  // const [password, setPassword] = useState("");
   const userEmailRef = useRef();
+  const userPasswordRef = useRef();
   // const [token, setToken] = useState('');
 
   async function handleButtonClick(e) {
     e.preventDefault()
     const userEmailInputVal = userEmailRef.current.value;
+    const userPasswordInputVal = userPasswordRef.current.value;
     dispatch(sayHello());
     dispatch(getEmail(userEmailInputVal));
+    // dispatch(getEmail(userPasswordInputVal));
 
     // console.log(userEmailInputVal);
     // console.log(password);
-    const token = await getToken(userEmailInputVal, password);
-    const doner = getProfileData();
+    const token = await getToken(userEmailInputVal, userPasswordInputVal);
+    const doner = await getProfileData();
     // localStorage.setItem('token', JSON.stringify(token));
     console.log(token);
     console.log(doner);
@@ -39,7 +42,9 @@ function SignIn() {
               <label htmlFor="username">Username</label><input ref={userEmailRef} type="text" id="username" />
             </div>
             <div className={styles["input-wrapper"]}>
-              <label htmlFor="password">Password</label><input type="password" id="password" value={password} onChange={(e) => setPassword( e.target.value)}/>
+              <label htmlFor="password">Password</label><input ref={userPasswordRef} type="password" id="password" 
+              // value={password} onChange={(e) => setPassword( e.target.value)}
+              />
             </div>
             <div className={styles["input-remember"]}>
               <input type="checkbox" id={styles["remember-me"]} /><label htmlFor="remember-me"

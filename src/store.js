@@ -19,7 +19,7 @@ import { createStore } from "redux";
 //   }
 // }
 
-
+const ACTION_GET_PASSWORD = "getPassword";
 //state
 const initialState = {
     firstName: "",
@@ -41,7 +41,7 @@ export const getEmail = (email) => ({
   payload: email
 })
 export const getPassword = (password) => ({
-  type: "getPassword",
+  type: ACTION_GET_PASSWORD,
   payload: password
 })
 
@@ -59,11 +59,20 @@ function reducer(state = initialState, action) {
       ...state,
       email: action.payload,
     }
-  }if(action.type === "getPassword"){
+  }if(action.type === ACTION_GET_PASSWORD){
     return {
       ...state,
       password: action.payload,
     }
+  
+  }
+  
+  if(action.type === "updateUser"){
+    return {
+      ...state,
+      user: {...action.payload}
+    }
+  
   }
 
   return state;
