@@ -20,12 +20,13 @@ import { createStore } from "redux";
 // }
 
 const ACTION_GET_PASSWORD = "getPassword";
+const SET_USER = "SET_USER";
+
 //state
-const initialState = {
-    firstName: "",
-    userName: "",
-    lastName: "",
+export const initialState = {
     email: "",
+    firstName: "",
+    lastName: "",
     password: "",
     isLogged: false,
     remember: false,
@@ -40,11 +41,17 @@ export const getEmail = (email) => ({
   type: "getEmail",
   payload: email
 })
+
 export const getPassword = (password) => ({
   type: ACTION_GET_PASSWORD,
   payload: password
 })
 
+// action creator
+export const setUser = (userData) => ({
+  type: SET_USER,
+  payload: userData,
+});
 
 //reducer
 function reducer(state = initialState, action) {
@@ -64,15 +71,13 @@ function reducer(state = initialState, action) {
       ...state,
       password: action.payload,
     }
-  
   }
   
-  if(action.type === "updateUser"){
+  if(action.type === SET_USER){
     return {
       ...state,
       user: {...action.payload}
     }
-  
   }
 
   return state;
