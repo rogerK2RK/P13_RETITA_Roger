@@ -1,17 +1,19 @@
 import React, {useRef} from 'react';
 import styles from "./styles.module.css"
 import { useDispatch, useSelector } from 'react-redux';
-import { sayHello, getEmail, setUser } from '../../store.js'
-import {getToken, getProfileData}  from '../../components/Token';
+import { sayHello, getEmail } from '../../store.js'
+import {getToken}  from '../../components/Token';
+import { useNavigate } from "react-router-dom";
 
 function SignIn() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const isConnected = useSelector(state => state.isLogged);
-  let email = useSelector(state => state.email);
-  let firstName = useSelector(state => state.firstName);
-  let lastName = useSelector(state => state.lastName);
-  let password = useSelector(state => state.password);
-  let remember = useSelector(state => state.remember);
+  // let email = useSelector(state => state.email);
+  // let firstName = useSelector(state => state.firstName);
+  // let lastName = useSelector(state => state.lastName);
+  // let password = useSelector(state => state.password);
+  // let remember = useSelector(state => state.remember);
 
   const userEmailRef = useRef();
   const userPasswordRef = useRef();
@@ -27,30 +29,10 @@ function SignIn() {
     dispatch(getEmail(userEmailInputVal));
 
     const statu = await getToken(userEmailInputVal, userPasswordInputVal);
-    const doner = await getProfileData();
-    email = doner.email;
-    firstName = doner.firstName;
-    lastName = doner.lastName;
-    console.log(statu);
-    console.log(doner);
-    console.log(email);
-    console.log(firstName);
-    console.log(lastName);
-    console.log(userPasswordInputVal);
+
 
     if (statu){
-      
-      dispatch(setUser({
-        email: email,
-        firstName: firstName,
-        lastName: lastName,
-        password: userPasswordInputVal,
-        isLogged: true,
-        remember: true,
-    }));
-      window.location.href = "/user";
-      // setUser(doner); 
-      // console.log(initialState);
+      navigate("/user");
     }else {
       
     }
