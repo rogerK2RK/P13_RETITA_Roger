@@ -52,7 +52,7 @@ function User() {
   return (
     <main className={styles["bg-dark"]}>
       <div>
-        {JSON.stringify(user)}
+        {/* {JSON.stringify(user)} */}
         {/* {JSON.stringify(user.isLogged)} */}
       </div>
       <div className={styles["header"]}>
