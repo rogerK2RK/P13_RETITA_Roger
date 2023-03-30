@@ -1,11 +1,17 @@
 .bg-dark {
     background-color: #12002b;
-    height: 70vh;
+    /* height: 70vh; */
     padding: 3em;
 }
 
 .box-change {
-    margin-top: 30px;
+    /* margin-top: 30px; */
+  display: flex;
+  justify-content: center;
+}
+
+#save-button, #frstnm-input {
+  margin-right: 15px;
 }
 
 /* .box-change-child {
@@ -15,12 +21,28 @@
     
 } */ 
 
+.box-change > input {
+  width: 180px;
+  padding: 8px;
+}
+
 .input-name {
     margin-right: 10px;
 }
 
 .input-lastname {
     margin-left: 10px;
+}
+
+.change-button {
+  padding: 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-top: 1rem;
+  border-color: #00bc77;
+  background-color: #FFF;
+  color: #00bc77;
+  width: 80px;
 }
 
 .sr-only {

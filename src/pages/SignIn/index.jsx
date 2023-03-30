@@ -1,7 +1,7 @@
 import React, {useRef} from 'react';
 import styles from "./styles.module.css"
 import { useDispatch, useSelector } from 'react-redux';
-import { sayHello, getEmail } from '../../store.js'
+import { sayHello, getEmail, getIsLogged } from '../../store.js'
 import {getToken}  from '../../components/Token';
 import { useNavigate } from "react-router-dom";
 
@@ -9,26 +9,27 @@ function SignIn() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isConnected = useSelector(state => state.isLogged);
-  // let email = useSelector(state => state.email);
-  // let firstName = useSelector(state => state.firstName);
-  // let lastName = useSelector(state => state.lastName);
-  // let password = useSelector(state => state.password);
-  // let remember = useSelector(state => state.remember);
 
   const userEmailRef = useRef();
   const userPasswordRef = useRef();
+  const useCheckboxRef = useRef(null)
 
   async function handleButtonClick(e) {
 
-    e.preventDefault()
+    e.preventDefault();
 
     const userEmailInputVal = userEmailRef.current.value;
     const userPasswordInputVal = userPasswordRef.current.value;
+    const isChecked = useCheckboxRef.current.checked; 
+
+    console.log(`Checkbox is checked: ${isChecked}`);
 
     dispatch(sayHello());
     dispatch(getEmail(userEmailInputVal));
+    dispatch(getIsLogged(isChecked));
 
     const statu = await getToken(userEmailInputVal, userPasswordInputVal);
+
 
 
     if (statu){
@@ -55,7 +56,7 @@ function SignIn() {
               />
             </div>
             <div className={styles["input-remember"]}>
-              <input type="checkbox" id={styles["remember-me"]} /><label htmlFor="remember-me"
+              <input type="checkbox" id={styles["remember-me"]} ref={useCheckboxRef} /><label htmlFor="remember-me"
                 >Remember me</label>
             </div>
             {/* <a href="./user.html" className={styles["sign-in-button"]}>Sign In</a> */}

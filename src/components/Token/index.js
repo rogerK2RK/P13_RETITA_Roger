@@ -34,7 +34,28 @@ async function getProfileData() {
         console.error(error);
     }
 };
-export { getToken, getProfileData };
+
+async function putNewInfos(firstName, lastName) {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.put(profileUrl,{
+            firstName: firstName,
+            lastName: lastName
+        }, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        const profileData = response.data.body;
+        // 3. Stocker les données dans Redux
+        return profileData;
+        // return profileData.body;
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+export { getToken, getProfileData, putNewInfos };
 
 
 // export default getToken

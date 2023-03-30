@@ -3,24 +3,9 @@ import { createStore } from "redux";
 
 
 
-// // on trouve les éléments dans le document HTML
-// const toSignIn = document.getElementById("sign-in-button");
-
-
-// toSignIn.addEventListener("click", () => {
-//   // Ce code s'exécute lorsque le bouton "Sign In" est cliqué
-//   // On envoie une action avec dispatch
-//   store.dispatch(sayHello());
-// });
-
-// function updateCosole(isLogged){
-//   if(isLogged === false) {
-//     console.log("Vous êtes déconnecter !");
-//   }
-// }
-
 const ACTION_GET_PASSWORD = "getPassword";
 const SET_USER = "SET_USER";
+const SET_LOGED = "getIsLogged"
 
 //state
 export const initialState = {
@@ -53,6 +38,12 @@ export const setUser = (userData) => ({
   payload: userData,
 });
 
+export const getIsLogged = (isLogged) => ({
+  type: SET_LOGED,
+  payload: isLogged,
+});
+
+
 //reducer
 function reducer(state = initialState, action) {
 
@@ -77,6 +68,13 @@ function reducer(state = initialState, action) {
     return {
       ...state,
       user: {...action.payload}
+    }
+  }
+
+  if(action.type === SET_LOGED){
+    return {
+      ...state,
+      isLogged:  action.payload,
     }
   }
 

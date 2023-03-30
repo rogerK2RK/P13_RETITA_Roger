@@ -1,18 +1,21 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState, useRef } from 'react';
 import styles from "./styles.module.css"
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser } from '../../store.js'
-import { getProfileData}  from '../../components/Token';
+import { getProfileData, putNewInfos}  from '../../components/Token';
 
 const selectUser = (state) => state.user;
 // const selectFullName = (state) => `${state.user.firstName} ${state.user.lastName}`
 
 function User() {
+  const [showBlock, setShowBlock] = useState(false);
   const dispatch = useDispatch();
   
   const user = useSelector(selectUser)
+  const userFirstNameRef = useRef();
+  const userLastNameRef = useRef();
 
-
+ 
   useEffect(() => {
     async function fetchProfile() {
       const {email,firstName,lastName} = await getProfileData();
@@ -20,27 +23,59 @@ function User() {
           email,
           firstName,
           lastName,
-          isLogged: true,
-          remember: true,
       }));
     }
     fetchProfile()
   },[]);
 
+  async function handleClickEdit(e){
+    e.preventDefault();
+    setShowBlock(!showBlock);
+  }
+
+  async function handleCancelClick() {
+    setShowBlock(false);
+  }
+
+  async function handleSavelClick(e){
+    e.preventDefault();
+
+    const userFirstNameVal = userFirstNameRef.current.value;
+    const userLastNameVal = userLastNameRef.current.value;
+    console.log("bonjour: " + userFirstNameVal+","+ userLastNameVal);
+    putNewInfos(userFirstNameVal, userLastNameVal);
+    setShowBlock(false);
+    getProfileData();
+
+  }
+
   return (
     <main className={styles["bg-dark"]}>
       <div>
         {JSON.stringify(user)}
+        {/* {JSON.stringify(user.isLogged)} */}
       </div>
       <div className={styles["header"]}>
         <h1>Welcome back<br />
-        {user.firstName} {user.lastName} !
+        {/* {user.firstName} {user.lastName} ! */}
+        {/* {JSON.stringify(user.firstName)} {JSON.stringify(user.lastName)} */}
         </h1>
-        <button className={styles["edit-button"]}>Edit Name</button>
-        <div className={styles['box-change']}>
-          <input type="text" placeholder="prénom" />
-          <input type="text" placeholder="prénom" />
+        {!showBlock && (
+        <button onClick={handleClickEdit} className={styles["edit-button"]}>Edit Name</button>
+        )}
+        {showBlock && (
+        <div className={styles["bx-glb-change"]}>
+          <div className={styles['box-change']}>
+            <input ref={userFirstNameRef} type="text" placeholder="first name" id={styles["frstnm-input"]}/>
+            <input ref={userLastNameRef} type="text" placeholder="last name" />
+          </div>
+        
+          <div className={styles['box-change']}>
+            <button onClick={handleSavelClick}  className={styles["change-button"]} id={styles["save-button"]}>Save</button>
+            <button onClick={handleCancelClick}  className={styles["change-button"]} id={styles["cancel-button"]}>Cancel</button>
+          </div>
         </div>
+        )}
       </div>
       <h2 className={styles["sr-only"]}>Accounts</h2>
       <section className={styles["account"]}>
