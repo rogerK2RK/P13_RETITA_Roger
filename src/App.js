@@ -4,11 +4,22 @@ import User from "./pages/User/index.jsx";
 import LogIn from "./pages/SignIn/index.jsx";
 import ErrorPage from "./pages/Erreur/index.jsx";
 import argentBankLogo from './assets/img/argentBankLogo.png';
+import { useSelector } from 'react-redux';
+
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import React from "react";
 
+
+
 function App() {
+  const isLogged = useSelector((state)=> state.isLogged);
+
+  //faire une function seulement quand le statut est connecter
+  const firstName =  useSelector((state)=> state);
+  // // console.log("ici c'est pour voir si il est connecter" + isLogged);
+  console.log(firstName);
+
   return (
     <React.StrictMode>
       <Router>
@@ -18,15 +29,20 @@ function App() {
             <img
               className="main-nav-logo-image"
               src={argentBankLogo}
+              
               alt="Argent Bank Logo"
             />
             <h1 className="sr-only">Argent Bank</h1>
           </a>
           <div>
-            <a className="main-nav-item" href="/sign-in">
+            { !isLogged ? <a className="main-nav-item" href="/sign-in">
               <i className="fa fa-user-circle"></i>
               Sign In
-            </a>
+            </a> : <a className="main-nav-item" href="/sign-in">
+              <i className="fa fa-user-circle"></i>
+              {/* {firstName} */}
+            </a> 
+            }
           </div>
         </nav>
       </div>

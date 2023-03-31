@@ -18,8 +18,10 @@ export const initialState = {
 }
 
 // Les actions creators
-export const sayHello = () => ({
-  type: "sayHello"
+
+export const rememberMe = (remember) => ({
+  type: "rememberMe",
+  payload: remember
 });
 
 export const getEmail = (email) => ({
@@ -47,31 +49,27 @@ export const getIsLogged = (isLogged) => ({
 //reducer
 function reducer(state = initialState, action) {
 
-  if (action.type === "sayHello"){
-    return {
-      ...state,
-      isLogged: !state.isLogged,
-    }
-  }if(action.type === "getEmail"){
+  if(action.type === "getEmail"){
     return {
       ...state,
       email: action.payload,
     }
-  }if(action.type === ACTION_GET_PASSWORD){
+  }else if(action.type === ACTION_GET_PASSWORD){
     return {
       ...state,
       password: action.payload,
     }
-  }
-  
-  if(action.type === SET_USER){
+  }else if (action.type === "rememberMe"){
+    return {
+      ...state,
+      remember: state.remember,
+    }
+  }else if(action.type === SET_USER){
     return {
       ...state,
       user: {...action.payload}
     }
-  }
-
-  if(action.type === SET_LOGED){
+  }else if(action.type === SET_LOGED){
     return {
       ...state,
       isLogged:  action.payload,

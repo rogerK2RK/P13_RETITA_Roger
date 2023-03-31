@@ -8,48 +8,52 @@ const selectUser = (state) => state.user;
 // const selectFullName = (state) => `${state.user.firstName} ${state.user.lastName}`
 
 function User() {
+  const [isLoading, setIsLoading] = useState(true);
+  // const [error, setError] = useState();
   const [showBlock, setShowBlock] = useState(false);
   const dispatch = useDispatch();
   
   const user = useSelector(selectUser)
   const userFirstNameRef = useRef();
   const userLastNameRef = useRef();
-
+  async function fetchProfile() {
+    const {email,firstName,lastName} = await getProfileData();
+      dispatch(setUser({
+        email,
+        firstName,
+        lastName,
+    }));
+  }
  
   useEffect(() => {
-    async function fetchProfile() {
-      const {email,firstName,lastName} = await getProfileData();
-        dispatch(setUser({
-          email,
-          firstName,
-          lastName,
-      }));
-    }
-    fetchProfile()
+    
+    fetchProfile().then(() =>  setIsLoading(false))
   },[]);
 
-  async function handleClickEdit(e){
+  function handleClickEdit(e){
     e.preventDefault();
     setShowBlock(!showBlock);
   }
 
-  async function handleCancelClick() {
+  function handleCancelClick() {
     setShowBlock(false);
   }
 
   async function handleSavelClick(e){
     e.preventDefault();
 
+
     const userFirstNameVal = userFirstNameRef.current.value;
     const userLastNameVal = userLastNameRef.current.value;
     console.log("bonjour: " + userFirstNameVal+","+ userLastNameVal);
-    putNewInfos(userFirstNameVal, userLastNameVal);
+    await putNewInfos(userFirstNameVal, userLastNameVal);
     setShowBlock(false);
     getProfileData();
-
+    fetchProfile();
   }
+  // if(error) return <div>{error}</div>
 
-  return (
+  return ( isLoading ? <div>Loading...</div> :
     <main className={styles["bg-dark"]}>
       <div>
         {/* {JSON.stringify(user)} */}
@@ -57,8 +61,7 @@ function User() {
       </div>
       <div className={styles["header"]}>
         <h1>Welcome back<br />
-        {/* {user.firstName} {user.lastName} ! */}
-        {/* {JSON.stringify(user.firstName)} {JSON.stringify(user.lastName)} */}
+        {user.firstName} {user.lastName} !
         </h1>
         {!showBlock && (
         <button onClick={handleClickEdit} className={styles["edit-button"]}>Edit Name</button>
