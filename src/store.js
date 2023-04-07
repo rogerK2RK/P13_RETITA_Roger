@@ -1,5 +1,5 @@
 // import { createStore } from "https://cdn.skypack.dev/redux@4.0.5";
-import { createStore } from "redux";
+import { createStore,combineReducers } from "redux";
 
 
 
@@ -47,7 +47,7 @@ export const getIsLogged = (isLogged) => ({
 
 
 //reducer
-function reducer(state = initialState, action) {
+function userReducer(state = initialState, action) {
 
   if(action.type === "getEmail"){
     return {
@@ -79,7 +79,8 @@ function reducer(state = initialState, action) {
   return state;
 }
 
-export const store = createStore(reducer, initialState);
+const rooReducer = combineReducers({user: userReducer})//pour combiner les deux objet
+export const store = createStore(rooReducer);
 
 //pour savoir dès que le state change
 // store.subscribe(() => {

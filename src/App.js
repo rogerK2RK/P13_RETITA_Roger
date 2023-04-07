@@ -8,19 +8,29 @@ import { useSelector } from 'react-redux';
 
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 
 
 function App() {
-  const isLogged = useSelector((state)=> state.isLogged);
+  const [isLoading, setIsLoading] = useState(true);
+  const isLogged = useSelector((state)=> state.user.isLogged);
 
   //faire une function seulement quand le statut est connecter
-  const firstName =  useSelector((state)=> state);
+  const firstName = useSelector((state)=> {
+    console.log(state)
+    return state.user.firstName
+  });
   // // console.log("ici c'est pour voir si il est connecter" + isLogged);
+  // firstName == "" ? 
   console.log(firstName);
 
-  return (
+  // useEffect(() => {
+    
+  //   firstName.then(() =>  setIsLoading(false))
+  // },[]);
+
+  return ( 
     <React.StrictMode>
       <Router>
       <div className="App">
@@ -40,7 +50,7 @@ function App() {
               Sign In
             </a> : <a className="main-nav-item" href="/sign-in">
               <i className="fa fa-user-circle"></i>
-              {/* {firstName} */}
+              {firstName}
             </a> 
             }
           </div>

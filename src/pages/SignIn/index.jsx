@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 function SignIn() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isConnected = useSelector(state => state.isLogged);
+  const isConnected = useSelector(state => state.user.isLogged);
   const [isChecked, setIsChecked] = useState(false);
 
   const userEmailRef = useRef();

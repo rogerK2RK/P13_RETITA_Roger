@@ -46,7 +46,7 @@ function User() {
     const userFirstNameVal = userFirstNameRef.current.value;
     const userLastNameVal = userLastNameRef.current.value;
     console.log("bonjour: " + userFirstNameVal+","+ userLastNameVal);
-    await putNewInfos(userFirstNameVal, userLastNameVal);
+    await putNewInfos(userFirstNameVal, userLastNameVal);// si 
     setShowBlock(false);
     getProfileData();
     fetchProfile();
