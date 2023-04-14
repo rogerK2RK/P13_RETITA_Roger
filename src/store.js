@@ -1,7 +1,7 @@
 // import { createStore } from "https://cdn.skypack.dev/redux@4.0.5";
 import { createStore,combineReducers } from "redux";
 
-
+const reduxDevtools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 
 const ACTION_GET_PASSWORD = "getPassword";
 const SET_USER = "SET_USER";
@@ -80,8 +80,8 @@ function userReducer(state = initialState, action) {
 }
 
 const rooReducer = combineReducers({user: userReducer})//pour combiner les deux objet
-export const store = createStore(rooReducer);
-
+export const store = createStore(rooReducer, reduxDevtools);
+// const store = createStore(reducer, reduxDevtools);
 //pour savoir dès que le state change
 // store.subscribe(() => {
 //   const state = store.getState();

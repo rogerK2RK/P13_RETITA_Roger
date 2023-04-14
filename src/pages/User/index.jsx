@@ -45,6 +45,7 @@ function User() {
 
     var userFirstNameVal = userFirstNameRef.current.value;
     var userLastNameVal = userLastNameRef.current.value;
+
     if ( userLastNameVal === "" && userFirstNameVal === "" ) {
       userLastNameVal = user.user.lastName;
       userFirstNameVal = user.user.firstName;
@@ -60,7 +61,7 @@ function User() {
     }
     // await putNewInfos(userFirstNameVal, userLastNameVal);// si 
     setShowBlock(false);
-    getProfileData();
+    // getProfileData();
     fetchProfile();
   }
   // if(error) return <div>{error}</div>
