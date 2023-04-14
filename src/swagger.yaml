@@ -1,0 +1,140 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Transactions API
+  description: API permettant de visualiser et de modifier des transactions d'un utilisateur
+basePath: /api/v1
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+
+# Définition des paramètres
+parameters:
+  AuthorizationHeader:
+    in: header
+    description: Token d'authentification
+    required: true
+    type: string
+  UserIdParam:
+    in: path
+    description: ID de l'utilisateur
+    required: true
+    type: string
+  TransactionIdParam:
+    in: path
+    description: ID de la transaction
+    required: true
+    type: string
+  MonthQueryParam:
+    in: query
+    description: Mois en cours
+    required: true
+    type: string
+
+# Définition des réponses
+responses:
+  SuccessResponse:
+    description: Succès
+    schema:
+      type: object
+      properties:
+        mois:
+          type: string
+        transactions:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              Montant:
+                type: number
+              balance:
+                type: string
+              date:
+                type: string
+  InvalidFieldsResponse:
+    description: Champs invalides
+  InternalServerErrorResponse:
+    description: Erreur interne du serveur
+  TransactionResponse:
+    description: Réponse d'une transaction
+    schema:
+      type: object
+      properties:
+        id:
+          type: string
+        Montant:
+          type: number
+        balance:
+          type: string
+        amout:
+          type: string
+        Description:
+          type: string
+        Date:
+          type: string
+        Type de Transaction:
+          type: string
+        category:
+          type: string
+        notes:
+          type: string
+  PatchResponse:
+    description: Réponse à une requête de mise à jour
+    schema:
+      type: object
+      properties:
+        statuts:
+          type: integer
+        message:
+          type: string
+        body:
+          type: object
+          properties:
+            id:
+              type: string
+            email:
+              type: string
+
+# Définition des routes
+paths:
+  /user/{userId}/transactions:
+    get:
+      tags:
+        - Transactions
+      summary: Visualiser les transactions du mois en cours
+      parameters:
+        - $ref: '#/parameters/AuthorizationHeader'
+        - $ref: '#/parameters/UserIdParam'
+        - $ref: '#/parameters/MonthQueryParam'
+      responses:
+        200:
+          $ref: '#/responses/SuccessResponse'
+        400:
+          $ref: '#/responses/InvalidFieldsResponse'
+        500:
+          $ref: '#/responses/InternalServerErrorResponse'
+  /user/{userId}/transactions/{transactionId}:
+    get:
+      tags:
+        - Transactions
+      summary: Visualiser une transaction
+      parameters:
+        - $ref: '#/parameters/AuthorizationHeader'
+        - $ref: '#/parameters/UserIdParam'
+        - $ref: '#/parameters/TransactionIdParam'
+      responses:
+        200:
+          $ref: '#/responses/TransactionResponse'
+        400:
+          $ref: '#/responses/InvalidFieldsResponse'
+        500:
+          $ref: '#/responses/InternalServerErrorResponse'
+    patch:
+      tags:
+        - Transactions
+      summary: Ajouter ou modifier des informations

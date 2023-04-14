@@ -35,33 +35,44 @@ function User() {
     setShowBlock(!showBlock);
   }
 
-  function handleCancelClick() {
+  function handleCancelClick(e) {
+    e.preventDefault();
     setShowBlock(false);
   }
 
   async function handleSavelClick(e){
     e.preventDefault();
 
-
-    const userFirstNameVal = userFirstNameRef.current.value;
-    const userLastNameVal = userLastNameRef.current.value;
-    console.log("bonjour: " + userFirstNameVal+","+ userLastNameVal);
-    await putNewInfos(userFirstNameVal, userLastNameVal);// si 
+    var userFirstNameVal = userFirstNameRef.current.value;
+    var userLastNameVal = userLastNameRef.current.value;
+    if ( userLastNameVal === "" && userFirstNameVal === "" ) {
+      userLastNameVal = user.user.lastName;
+      userFirstNameVal = user.user.firstName;
+      await putNewInfos(userFirstNameVal, userLastNameVal);
+    } else if ( userFirstNameVal === "" ) {
+      userFirstNameVal = user.user.firstName;
+      await putNewInfos(userFirstNameVal, userLastNameVal);
+    } else if ( userLastNameVal === "" ) {
+      userLastNameVal = user.user.lastName;
+      await putNewInfos(userFirstNameVal, userLastNameVal);
+    } else {
+      await putNewInfos(userFirstNameVal, userLastNameVal);
+    }
+    // await putNewInfos(userFirstNameVal, userLastNameVal);// si 
     setShowBlock(false);
     getProfileData();
     fetchProfile();
   }
   // if(error) return <div>{error}</div>
+  console.log("bonjour: " + user.user.firstName+","+ user.user.lastName);
 
   return ( isLoading ? <div>Loading...</div> :
     <main className={styles["bg-dark"]}>
       <div>
-        {/* {JSON.stringify(user)} */}
-        {/* {JSON.stringify(user.isLogged)} */}
       </div>
       <div className={styles["header"]}>
         <h1>Welcome back<br />
-        {user.firstName} {user.lastName} !
+        {user.user.firstName} {user.user.lastName} !
         </h1>
         {!showBlock && (
         <button onClick={handleClickEdit} className={styles["edit-button"]}>Edit Name</button>
