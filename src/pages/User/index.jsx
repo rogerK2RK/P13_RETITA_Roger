@@ -3,13 +3,10 @@ import styles from "./styles.module.css"
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser } from '../../store.js'
 import { getProfileData, putNewInfos}  from '../../components/Token';
-
-const selectUser = (state) => state.user;
-// const selectFullName = (state) => `${state.user.firstName} ${state.user.lastName}`
+import { selectUser } from "../../selectors.js";
 
 function User() {
   const [isLoading, setIsLoading] = useState(true);
-  // const [error, setError] = useState();
   const [showBlock, setShowBlock] = useState(false);
   const dispatch = useDispatch();
   
@@ -25,10 +22,18 @@ function User() {
     }));
   }
  
+  // useEffect(() => {
+  //   fetchProfile().then(() =>  setIsLoading(false))
+  // },[]);
+
   useEffect(() => {
-    
-    fetchProfile().then(() =>  setIsLoading(false))
-  },[]);
+    fetchProfile()
+      .then(() => setIsLoading(false))
+      .catch((error) => {
+        console.error(error);
+        setIsLoading(false);
+      });
+  });
 
   function handleClickEdit(e){
     e.preventDefault();
@@ -59,13 +64,11 @@ function User() {
     } else {
       await putNewInfos(userFirstNameVal, userLastNameVal);
     }
-    // await putNewInfos(userFirstNameVal, userLastNameVal);// si 
     setShowBlock(false);
-    // getProfileData();
     fetchProfile();
   }
-  // if(error) return <div>{error}</div>
-  console.log("bonjour: " + user.user.firstName+","+ user.user.lastName);
+
+  // console.log("bonjour: " + user.user.firstName+","+ user.user.lastName);
 
   return ( isLoading ? <div>Loading...</div> :
     <main className={styles["bg-dark"]}>
@@ -73,7 +76,7 @@ function User() {
       </div>
       <div className={styles["header"]}>
         <h1>Welcome back<br />
-        {user.user.firstName} {user.user.lastName} !
+        {/* {user.user.firstName} {user.user.lastName} ! */}
         </h1>
         {!showBlock && (
         <button onClick={handleClickEdit} className={styles["edit-button"]}>Edit Name</button>

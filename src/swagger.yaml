@@ -14,21 +14,25 @@ produces:
 # Définition des paramètres
 parameters:
   AuthorizationHeader:
+    name: Authorization
     in: header
     description: Token d'authentification
     required: true
     type: string
   UserIdParam:
+    name: user
     in: path
     description: ID de l'utilisateur
     required: true
     type: string
   TransactionIdParam:
+    name: transaction
     in: path
     description: ID de la transaction
     required: true
     type: string
   MonthQueryParam:
+    name: month
     in: query
     description: Mois en cours
     required: true
@@ -102,7 +106,7 @@ responses:
 
 # Définition des routes
 paths:
-  /user/{userId}/transactions:
+  /user/userId/transactions:
     get:
       tags:
         - Transactions
@@ -118,7 +122,7 @@ paths:
           $ref: '#/responses/InvalidFieldsResponse'
         500:
           $ref: '#/responses/InternalServerErrorResponse'
-  /user/{userId}/transactions/{transactionId}:
+  /user/userId/transactions/transactionId:
     get:
       tags:
         - Transactions
@@ -138,3 +142,10 @@ paths:
       tags:
         - Transactions
       summary: Ajouter ou modifier des informations
+      responses:
+        200:
+          $ref: '#/responses/PatchResponse'
+        400:
+          $ref: '#/responses/InvalidFieldsResponse'
+        500:
+          $ref: '#/responses/InternalServerErrorResponse'

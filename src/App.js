@@ -8,27 +8,16 @@ import { useSelector } from 'react-redux';
 
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { isLogged, firstName } from "./selectors.js";
 
 
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true);
-  const isLogged = useSelector((state)=> state.user.isLogged);
+  const isLoggedEx = useSelector(isLogged);
+  const firstNameEx = useSelector(firstName);
 
-  //faire une function seulement quand le statut est connecter
-  const firstName = useSelector((state)=> {
-    console.log(state)
-    return state.user.firstName
-  });
-  // // console.log("ici c'est pour voir si il est connecter" + isLogged);
-  // firstName == "" ? 
-  console.log(firstName);
-
-  // useEffect(() => {
-    
-  //   firstName.then(() =>  setIsLoading(false))
-  // },[]);
+  console.log(firstNameEx);
 
   return ( 
     <React.StrictMode>
@@ -45,12 +34,15 @@ function App() {
             <h1 className="sr-only">Argent Bank</h1>
           </a>
           <div>
-            { !isLogged ? <a className="main-nav-item" href="/sign-in">
+            { !isLoggedEx ? 
+            <a className="main-nav-item" href="/sign-in">
               <i className="fa fa-user-circle"></i>
               Sign In
-            </a> : <a className="main-nav-item" href="/sign-in">
+            </a> 
+            : 
+            <a className="main-nav-item" href="/sign-in">
               <i className="fa fa-user-circle"></i>
-              {firstName}
+              {firstNameEx}
             </a> 
             }
           </div>

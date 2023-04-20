@@ -4,11 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getEmail, getIsLogged, rememberMe } from '../../store.js'
 import {getToken}  from '../../components/Token';
 import { useNavigate } from "react-router-dom";
+import { isLogged } from '../../selectors';
 
 function SignIn() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isConnected = useSelector(state => state.user.isLogged);
+  const isConnected = useSelector(isLogged);
   const [isChecked, setIsChecked] = useState(false);
 
   const userEmailRef = useRef();
