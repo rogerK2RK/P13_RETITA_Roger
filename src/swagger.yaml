@@ -92,17 +92,24 @@ responses:
     schema:
       type: object
       properties:
-        statuts:
-          type: integer
-        message:
+        id:
           type: string
-        body:
-          type: object
-          properties:
-            id:
-              type: string
-            email:
-              type: string
+        Montant:
+          type: number
+        balance:
+          type: string
+        amout:
+          type: string
+        Description:
+          type: string
+        Date:
+          type: string
+        Type de Transaction:
+          type: string
+        category:
+          type: string
+        notes:
+          type: string
 
 # Définition des routes
 paths:
@@ -124,6 +131,8 @@ paths:
           $ref: '#/responses/InternalServerErrorResponse'
   /user/userId/transactions/transactionId:
     get:
+      security:
+        - Bearer: []
       tags:
         - Transactions
       summary: Visualiser une transaction
@@ -139,6 +148,8 @@ paths:
         500:
           $ref: '#/responses/InternalServerErrorResponse'
     patch:
+      security:
+        - Bearer: []
       tags:
         - Transactions
       summary: Ajouter ou modifier des informations
@@ -149,3 +160,8 @@ paths:
           $ref: '#/responses/InvalidFieldsResponse'
         500:
           $ref: '#/responses/InternalServerErrorResponse'
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header

@@ -1,7 +1,7 @@
 import React, {useRef, useState} from 'react';
 import styles from "./styles.module.css"
 import { useDispatch, useSelector } from 'react-redux';
-import { getEmail, getIsLogged, rememberMe } from '../../store.js'
+import { getEmail, getIsLogged, rememberMe } from '../../actions.js'
 import {getToken}  from '../../components/Token';
 import { useNavigate } from "react-router-dom";
 import { isLogged } from '../../selectors';

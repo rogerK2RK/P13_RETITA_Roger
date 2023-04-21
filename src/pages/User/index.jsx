@@ -1,7 +1,7 @@
 import React, {useEffect, useState, useRef } from 'react';
 import styles from "./styles.module.css"
 import { useSelector, useDispatch } from 'react-redux';
-import { setUser } from '../../store.js'
+import { setUser } from '../../actions.js'
 import { getProfileData, putNewInfos}  from '../../components/Token';
 import { selectUser } from "../../selectors.js";
 
@@ -52,14 +52,14 @@ function User() {
     var userLastNameVal = userLastNameRef.current.value;
 
     if ( userLastNameVal === "" && userFirstNameVal === "" ) {
-      userLastNameVal = user.user.lastName;
-      userFirstNameVal = user.user.firstName;
+      userLastNameVal = user.lastName;
+      userFirstNameVal = user.firstName;
       await putNewInfos(userFirstNameVal, userLastNameVal);
     } else if ( userFirstNameVal === "" ) {
-      userFirstNameVal = user.user.firstName;
+      userFirstNameVal = user.firstName;
       await putNewInfos(userFirstNameVal, userLastNameVal);
     } else if ( userLastNameVal === "" ) {
-      userLastNameVal = user.user.lastName;
+      userLastNameVal = user.lastName;
       await putNewInfos(userFirstNameVal, userLastNameVal);
     } else {
       await putNewInfos(userFirstNameVal, userLastNameVal);
@@ -76,7 +76,7 @@ function User() {
       </div>
       <div className={styles["header"]}>
         <h1>Welcome back<br />
-        {/* {user.user.firstName} {user.user.lastName} ! */}
+        {user.firstName} {user.lastName} !
         </h1>
         {!showBlock && (
         <button onClick={handleClickEdit} className={styles["edit-button"]}>Edit Name</button>
