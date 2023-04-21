@@ -3,14 +3,15 @@ import styles from "./styles.module.css"
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser } from '../../actions.js'
 import { getProfileData, putNewInfos}  from '../../components/Token';
-import { selectUser } from "../../selectors.js";
+import { firstName,lastName, selectUser } from "../../selectors.js";
 
 function User() {
   const [isLoading, setIsLoading] = useState(true);
   const [showBlock, setShowBlock] = useState(false);
   const dispatch = useDispatch();
   
-  const user = useSelector(selectUser)
+  const user = useSelector(selectUser);
+  // useSelector(selectUser);
   const userFirstNameRef = useRef();
   const userLastNameRef = useRef();
   async function fetchProfile() {
@@ -22,9 +23,6 @@ function User() {
     }));
   }
  
-  // useEffect(() => {
-  //   fetchProfile().then(() =>  setIsLoading(false))
-  // },[]);
 
   useEffect(() => {
     fetchProfile()
@@ -48,22 +46,10 @@ function User() {
   async function handleSavelClick(e){
     e.preventDefault();
 
-    var userFirstNameVal = userFirstNameRef.current.value;
-    var userLastNameVal = userLastNameRef.current.value;
-
-    if ( userLastNameVal === "" && userFirstNameVal === "" ) {
-      userLastNameVal = user.lastName;
-      userFirstNameVal = user.firstName;
-      await putNewInfos(userFirstNameVal, userLastNameVal);
-    } else if ( userFirstNameVal === "" ) {
-      userFirstNameVal = user.firstName;
-      await putNewInfos(userFirstNameVal, userLastNameVal);
-    } else if ( userLastNameVal === "" ) {
-      userLastNameVal = user.lastName;
-      await putNewInfos(userFirstNameVal, userLastNameVal);
-    } else {
-      await putNewInfos(userFirstNameVal, userLastNameVal);
-    }
+    const userFirstNameVal = userFirstNameRef.current.value || lastName;
+    const userLastNameVal = userLastNameRef.current.value || firstName;
+    
+    await putNewInfos(userFirstNameVal, userLastNameVal);
     setShowBlock(false);
     fetchProfile();
   }
