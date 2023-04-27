@@ -26,7 +26,20 @@ function SignIn() {
 
     const userEmailInputVal = userEmailRef.current.value;
     const userPasswordInputVal = userPasswordRef.current.value;
-    // const isChecked = useCheckboxRef.current.value; 
+
+    // Vérifiez si les champs d'entrée ne sont pas vides
+    if (!userEmailInputVal) {
+      document.querySelector('#username-error').textContent = 'Veuillez entrer une adresse e-mail.';
+    }
+    if (!userPasswordInputVal) {
+      document.querySelector('#password-error').textContent = 'Veuillez entrer un mot de passe.';
+    }
+
+    // Vérifiez si l'adresse e-mail est valide
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userEmailInputVal)) {
+      document.querySelector('#username-error').textContent = 'Veuillez entrer une adresse e-mail valide.';
+    }
+
 
     console.log(`Checkbox is checked: ${isChecked}`);
 
@@ -41,7 +54,8 @@ function SignIn() {
       dispatch(getIsLogged(true));
       navigate("/user");
     }else {
-      
+      console.log("j'affiche les messages d'erreur")
+      document.querySelector('#password-error').textContent = 'Nom d\'utilisateur ou mot de passe incorrect.';
     }
     
   };
@@ -54,22 +68,22 @@ function SignIn() {
           <h1>Sign In </h1>
           <form>
             <div className={styles["input-wrapper"]}>
-              <label htmlFor="username">Username</label><input ref={userEmailRef} type="text" id="username" />
+              <label htmlFor="username">Username</label>
+              <input ref={userEmailRef} type="text" id="username" />
+              <span id="username-error" className={styles['errorMessage']}></span>
             </div>
             <div className={styles["input-wrapper"]}>
-              <label htmlFor="password">Password</label><input ref={userPasswordRef} type="password" id="password" 
-              // value={password} onChange={(e) => setPassword( e.target.value)}
-              />
+              <label htmlFor="password">Password</label>
+              <input ref={userPasswordRef} type="password" id="password" />
+              <span id="password-error" className={styles['errorMessage']}></span>
             </div>
             <div className={styles["input-remember"]}>
               <input type="checkbox" id={styles["remember-me"]} 
-                // ref={useCheckboxRef}
                 checked={isChecked}
                 onChange={handleCheckboxChange} 
                /><label htmlFor="remember-me"
                 >Remember me</label>
             </div>
-            {/* <a href="./user.html" className={styles["sign-in-button"]}>Sign In</a> */}
             <button onClick={handleButtonClick} className={styles["sign-in-button"]} id="sign-in-button">Sign In</button>
             <p>{isConnected === true ? "User Connecter" : "User Deconnecter"}</p>
           </form>
@@ -81,6 +95,3 @@ function SignIn() {
 }
 
 export default SignIn ;
-
-
-
