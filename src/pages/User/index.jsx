@@ -3,7 +3,7 @@ import styles from "./styles.module.css"
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser } from '../../actions.js'
 import { getProfileData, putNewInfos}  from '../../components/Token';
-import { firstName,lastName, selectUser } from "../../selectors.js";
+import { firstName, lastName, selectUser } from "../../selectors.js";
 
 function User() {
   const [isLoading, setIsLoading] = useState(true);
@@ -11,6 +11,9 @@ function User() {
   const dispatch = useDispatch();
   
   const user = useSelector(selectUser);
+  const firstNameEx = useSelector(firstName);
+  const lastNameEx = useSelector(lastName);
+
   // useSelector(selectUser);
   const userFirstNameRef = useRef();
   const userLastNameRef = useRef();
@@ -42,12 +45,11 @@ function User() {
     e.preventDefault();
     setShowBlock(false);
   }
-
+  
   async function handleSavelClick(e){
     e.preventDefault();
-
-    const userFirstNameVal = userFirstNameRef.current.value || lastName;
-    const userLastNameVal = userLastNameRef.current.value || firstName;
+    const userFirstNameVal = userFirstNameRef.current.value || firstNameEx ;
+    const userLastNameVal = userLastNameRef.current.value || lastNameEx ;
     
     await putNewInfos(userFirstNameVal, userLastNameVal);
     setShowBlock(false);
