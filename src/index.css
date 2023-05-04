@@ -23,6 +23,20 @@ body {
   padding: 3em;
 }
 
+.bx-sgn-name{
+  display: flex;
+}
+
+.btn-lgout {
+  background-color: none ! important;
+  border: none;
+  margin-right: 0.5rem;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+}
+
 .sr-only {
   border: 0 !important;
   clip: rect(1px, 1px, 1px, 1px) !important; /* 1 */

@@ -1,4 +1,4 @@
-import { getEmail, ACTION_GET_PASSWORD, SET_USER, SET_LOGED, rememberMe  } from "./actions";
+import { getEmail, ACTION_GET_PASSWORD, SET_USER, SET_LOGED, rememberMe, CLEAR_SESSION  } from "./actions";
 import { combineReducers } from "redux";
 
 //state
@@ -38,6 +38,10 @@ function userReducer(state = initialState, action) {
       return {
         ...state,
         isLogged:  action.payload,
+      }
+    }else if(action.type === CLEAR_SESSION){
+      return {
+        ...initialState,
       }
     }
   

@@ -1,6 +1,8 @@
 export const ACTION_GET_PASSWORD = "getPassword";
 export const SET_USER = "SET_USER";
 export const SET_LOGED = "getIsLogged"
+export const CLEAR_SESSION = 'CLEAR_SESSION';
+
 
 // Les actions creators
 
@@ -29,3 +31,9 @@ export const getIsLogged = (isLogged) => ({
     type: SET_LOGED,
     payload: isLogged,
 });
+
+export const clearSession = () => {
+  return {
+    type: CLEAR_SESSION,
+  };
+};
