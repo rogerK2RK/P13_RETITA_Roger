@@ -85,7 +85,7 @@
   
   .account-amount {
     margin: 0;
-    font-size: 2.5rem;
+    font-size: 1.5rem;
     font-weight: bold;
   }
   
@@ -141,5 +141,10 @@
   
     .transaction-button {
       width: 200px;
+    }
+    .account-amount {
+      margin: 0;
+      font-size: 2.5rem;
+      font-weight: bold;
     }
   }
